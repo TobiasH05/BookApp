@@ -10,7 +10,7 @@ public class App {
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.print("Whos bookshelf is this: ");
-		String owner = scanner.next();
+		String owner = scanner.nextLine();
 		bookshelf = new Bookshelf(owner);
 
 		while (true) {
@@ -36,20 +36,27 @@ public class App {
 					break;
 				case "2":
 					checkBooks();
+					break;
 				case "3":
 					System.out.println(Integer.toString(bookshelf.getTotalPages()));
+					break;
 				case "4":
 					checkPagesByYear(scanner);
+					break;
 				case "5":
 					addBook(scanner);
+					break;
 				case "6":
 					System.out.print("Title to remove: ");
 					bookshelf.removeBook(bookshelf.getBookByTitle(scanner.nextLine()));
+					break;
 				case "7":
 					System.out.println("ISBN: ");
 					ServerCommunication.getBookByISBN(scanner.nextLine());
+					break;
 				default:
 					System.out.println("No valid input given: try again");
+					break;
 			}
 		}
 
