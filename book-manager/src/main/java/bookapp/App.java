@@ -89,11 +89,11 @@ public class App {
 		String author = scanner.nextLine();
 		System.out.print("Pages: ");
 		int pages = Integer.parseInt(scanner.nextLine());
-		System.out.println("Year read: ");
+		System.out.print("Year read: ");
 		int year = Integer.parseInt(scanner.nextLine());
-		System.out.println("Month read (1-12 inclusive)");
+		System.out.print("Month read (1-12 inclusive): ");
 		int month = Integer.parseInt(scanner.nextLine());
-		System.out.println("Day read (1-month length inclusive)");
+		System.out.print("Day read (1-month length inclusive): ");
 		int day = Integer.parseInt(scanner.nextLine());
 
 		Date readDate = new Date(year, month, day);
