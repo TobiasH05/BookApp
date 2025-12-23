@@ -2,15 +2,28 @@ package bookapp;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 public class ServerCommunication {
 	private static HttpClient client = HttpClient.newHttpClient();
+	private static String APIKey = System.getenv("GOOGLE_BOOKS_API_KEY");
 
 	public static String getBookByISBN(String isbn) {
-		String url = "https://openlibrary.org/api/books?bibkeys=ISBN:" + isbn + "&format=json&jscmd=data";
+		if (APIKey == null || APIKey.isBlank()) {
+			System.err.println("Missing env var: GOOGLE_BOOKS_API_KEY. API needs key for usage");
+			return null;
+		}
+
+		String query = "isbn:" + isbn;
+		String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+
+		String url = "https://www.googleapis.com/books/v1/volumes"
+				+ "?q=" + encodedQuery
+				+ "&key=" + URLEncoder.encode(APIKey, StandardCharsets.UTF_8);
 
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(url))
