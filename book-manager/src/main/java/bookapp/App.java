@@ -1,5 +1,6 @@
 package bookapp;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class App {
@@ -29,8 +30,74 @@ public class App {
 			if (action.equals("1")) {
 				break;
 			}
+
+			switch (action) {
+				case "1":
+					break;
+				case "2":
+					checkBooks();
+				case "3":
+					System.out.println(Integer.toString(bookshelf.getTotalPages()));
+				case "4":
+					checkPagesByYear(scanner);
+				case "5":
+					addBook(scanner);
+				case "6":
+					System.out.print("Title to remove: ");
+					bookshelf.removeBook(bookshelf.getBookByTitle(scanner.nextLine()));
+				case "7":
+					System.out.println("ISBN: ");
+					ServerCommunication.getBookByISBN(scanner.nextLine());
+				default:
+					System.out.println("No valid input given: try again");
+			}
 		}
 
 		scanner.close();
+	}
+
+	private static void checkBooks() {
+		if (bookshelf.getBooks().isEmpty()) {
+			System.out.println("No books in bookshelf");
+			return;
+		}
+
+		System.out.println("Books in collection:");
+		for (Book book : bookshelf.getBooks()) {
+			System.out.println(book.getTitle());
+		}
+	}
+
+	private static void checkPagesByYear(Scanner scanner) {
+		System.out.print("Year: ");
+		int year = Integer.parseInt(scanner.nextLine());
+		System.out.println(Integer.toString(bookshelf.getTotalPagesByYear(year)));
+	}
+
+	@SuppressWarnings("deprecation")
+	private static void addBook(Scanner scanner) {
+		System.out.print("Title: ");
+		String title = scanner.nextLine();
+		System.out.print("Author: ");
+		String author = scanner.nextLine();
+		System.out.print("Pages: ");
+		int pages = Integer.parseInt(scanner.nextLine());
+		System.out.println("Year read: ");
+		int year = Integer.parseInt(scanner.nextLine());
+		System.out.println("Month read (1-12 inclusive)");
+		int month = Integer.parseInt(scanner.nextLine());
+		System.out.println("Day read (1-month length inclusive)");
+		int day = Integer.parseInt(scanner.nextLine());
+
+		Date readDate = new Date(year, month, day);
+
+		Book book = new Book(
+				title,
+				author,
+				"",
+				pages,
+				readDate);
+
+		bookshelf.addBook(book);
 	}
 }
